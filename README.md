@@ -42,8 +42,8 @@ Generate the simulated test data (uydu_telemetri.csv) by running the disaster si
 
 ```bash
 python data_generator.py
-Launch the FastAPI server:
 ```
+Launch the FastAPI server:
 ```bash
 python -m uvicorn api:app --reload
 (The server will start running locally at http://127.0.0.1:8000)
