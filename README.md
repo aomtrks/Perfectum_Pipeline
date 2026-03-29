@@ -63,6 +63,12 @@ Note: If you are testing on an Android Emulator, make sure to update the API URL
 
 ## Screenshots
 
+<p align="center">
+  <img width="1919" height="980" alt="Image" src="https://github.com/user-attachments/assets/4e3c874c-4118-4cce-bb75-1b748bab09bc" />
+  <br>
+  <i>Figure 1: Comparison of raw cosmic radiation data (red) vs. AI-filtered data (blue)</i>
+</p>
+
 Left/Red Line: Raw telemetry data suffering from cosmic radiation damage, spiking up to dangerous 30V levels.
 
 Right/Blue Line: The smooth, safe telemetry trajectory instantly repaired by the Perfectum Pipeline using the Isolation Forest algorithm.
