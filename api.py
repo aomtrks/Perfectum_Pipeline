@@ -17,27 +17,27 @@ app.add_middleware(
 def telemetri_verilerini_getir():
     print("Flutter'dan istek geldi! Makine Öğrenmesi modeli çalışıyor...")
     
-    # 1. Ham Veriyi Oku
+    # 1. Ham Veriyi Okumak için
     df = pd.read_csv('uydu_telemetri.csv')
     
-    # ML modelinin kafası karışmasın diye önce NaN (Boş) değerleri hızlıca dolduralım
+    # ML modelinin kafası karışmasın diye önce NaN (Boş) değerleri hızlıca doldurdum
     df['Gecici_Voltaj'] = df['Bozuk_Voltaj'].interpolate(method='linear').bfill().ffill()
     
-    # --- MAKİNE ÖĞRENMESİ AŞAMASI BAŞLIYOR ---
+    # MAKİNE ÖĞRENMESİ AŞAMASI 
     print("İzolasyon Ormanı (Isolation Forest) anomalileri arıyor...")
     
     # Modeli tanımlıyoruz. contamination=0.05 demek "Benim tahminimce verimin %5'i radyasyonlu" demektir.
     ml_modeli = IsolationForest(contamination=0.05, random_state=42)
     
-    # Modeli eğitiyoruz ve tahmin yaptırıyoruz. (Girdi olarak DataFrame formatında vermeliyiz: [['Gecici_Voltaj']])
-    # Model normal verilere 1, anomali (radyasyon) bulduğu yerlere -1 etiketini basar!
+    # Modeli eğitiyoruz ve tahmin yaptırıyoruz.
+    # Model normal verilere 1, anomali (radyasyon) bulduğu yerlere -1 etiketini basarcak
     df['Radyasyon_Tespiti'] = ml_modeli.fit_predict(df[['Gecici_Voltaj']])
     
-    # --- ONARIM AŞAMASI ---
-    # Modelin "-1" (Radyasyon!) dediği yerleri tespit edip o değerleri siliyoruz (NaN yapıyoruz)
+    # ONARIM AŞAMASI
+    # Modelin "-1" (Radyasyon!) dediği yerleri tespit edip o değerleri sildim (NaN yaptım)
     df.loc[df['Radyasyon_Tespiti'] == -1, 'Gecici_Voltaj'] = np.nan
     
-    # Sildiğimiz o hastalıklı pikselleri, yanındaki sağlıklı verilere bakarak (İnterpolasyon) mükemmelce dikiyoruz
+    # Sildiğim o hastalıklı pikselleri, yanındaki sağlıklı verilere bakarak (İnterpolasyon) düzelttim
     df['Filtreli_Voltaj'] = df['Gecici_Voltaj'].interpolate(method='linear').bfill().ffill()
     
     # Veriyi Flutter'a hazırlama

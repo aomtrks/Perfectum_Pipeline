@@ -16,7 +16,7 @@ class PerfectumApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Kozmik Veri İstasyonu',
       theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: const Color(0xFF0A0E21), // Uzay mavisi arka plan
+        scaffoldBackgroundColor: const Color(0xFF0A0E21), 
         appBarTheme: const AppBarTheme(color: Color(0xFF111328)),
       ),
       home: const DashboardScreen(),
@@ -42,23 +42,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
     setState(() { yukleniyor = true; });
 
     try {
-      // Android emülatör kullanıyorsan 127.0.0.1 yerine 10.0.2.2 yazmalısın!
       final url = Uri.parse('http://127.0.0.1:8000/telemetri_getir'); 
       final response = await http.get(url);
 
       if (response.statusCode == 200) {
         final jsonVeri = jsonDecode(response.body);
         
-        // JSON'dan gelen listeleri Dart listelerine alıyoruz
+        // JSON'dan gelen listeleri Dart listelerine almak için
         List<dynamic> kirliVoltajlar = jsonVeri['kirli_veri'];
         List<dynamic> temizVoltajlar = jsonVeri['temiz_veri'];
 
         List<FlSpot> geciciKirli = [];
         List<FlSpot> geciciTemiz = [];
 
-        // Verileri fl_chart'ın anlayacağı X ve Y koordinatlarına dönüştürüyoruz
+        // Verileri fl_chart'ın anlayacağı X ve Y koordinatlarına dönüştürmek için
         for (int i = 0; i < kirliVoltajlar.length; i++) {
-          // Eğer veri null (radyasyon körlüğü) ise sıfır olarak gösterelim
+          // Eğer veri null (radyasyon körlüğü) ise sıfır olarak göstereceğim
           double kirliY = kirliVoltajlar[i] != null ? kirliVoltajlar[i].toDouble() : 0.0;
           double temizY = temizVoltajlar[i].toDouble();
 
@@ -130,12 +129,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         color: const Color(0xFF1D1E33),
                         borderRadius: BorderRadius.circular(15),
                       ),
-                      // fl_chart kütüphanesi ile grafiği çizdiriyoruz
+                      // fl_chart kütüphanesi ile grafiği çizdirdim
                       child: LineChart(
                         LineChartData(
                           minY: 0,
-                          maxY: 30, // Voltaj radyasyonla 30'lara fırladığı için tavanı yüksek tuttuk
-                          lineTouchData: const LineTouchData(enabled: false), // Performans için dokunmayı kapattık
+                          maxY: 30, // Voltaj radyasyonla 30'lara fırladığı için tavanı yüksek tuttum
+                          lineTouchData: const LineTouchData(enabled: false), // Performans için dokunmayı kapattım
                           gridData: const FlGridData(show: true, drawVerticalLine: false),
                           titlesData: const FlTitlesData(
                             topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
@@ -152,7 +151,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               isStrokeCapRound: true,
                               dotData: const FlDotData(show: false),
                             ),
-                            // 2. Çizgi: Parlak Mavi ve kalın (Perfectum Temiz Veri)
+                            // 2. Çizgi: Parlak Mavi ve kalın (Temiz Veri)
                             LineChartBarData(
                               spots: temizVeriNoktalari,
                               isCurved: true,
@@ -167,7 +166,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             ),
                           ],
                         ),
-                        // Grafik yüklendiğinde hafif bir animasyonla gelsin
+                        // Grafik yüklendiğinde hafif bir animasyonla gelsin diye
                         duration: const Duration(milliseconds: 800),
                         curve: Curves.easeInOut,
                       ),

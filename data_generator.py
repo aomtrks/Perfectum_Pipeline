@@ -34,7 +34,7 @@ def generate_telemetry_data(senaryo="karisik"):
     return df
 
 if __name__ == "__main__":
-    # Test etmek istediğiniz senaryoyu buraya yazın: "seu", "firtina", "kesinti" veya "karisik"
+    # Test etmek istediğiniz senaryoyu buraya yazarız: "seu", "firtina", "kesinti" veya "karisik"
     uydu_verisi = generate_telemetry_data(senaryo="karisik")
     
     uydu_verisi.to_csv('uydu_telemetri.csv', index=False)
