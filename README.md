@@ -37,26 +37,29 @@ First, install the required Python dependencies:
 
 ```bash
 pip install pandas numpy scikit-learn fastapi uvicorn matplotlib
+```
 Generate the simulated test data (uydu_telemetri.csv) by running the disaster simulator:
 
-Bash
+```bash
 python data_generator.py
 Launch the FastAPI server:
-
-Bash
+```
+```bash
 python -m uvicorn api:app --reload
 (The server will start running locally at http://127.0.0.1:8000)
-
+```
 2. Launching the Flutter Ground Control Dashboard
 Open a new terminal session, navigate to the root directory of your Flutter project, and fetch the required packages:
 
-Bash
+```bash
 flutter pub get
+```
 Run the application (on Web, Windows, or a connected mobile device/emulator):
 
-Bash
+```bash
 flutter run
 Note: If you are testing on an Android Emulator, make sure to update the API URL in main.dart to http://10.0.2.2:8000/telemetri_getir to properly route localhost traffic.
+```
 
 ## Screenshots
 
